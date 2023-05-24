@@ -1,4 +1,4 @@
-import { AlertDialogOverlay, Button, useDisclosure, AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter } from '@chakra-ui/react';
+import { AlertDialogOverlay, Button, useDisclosure, AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, useToast } from '@chakra-ui/react';
 import React, { useRef } from 'react';
 import { deleteUser } from '../../api/deleteUser';
 import { logout, $user } from '../../states/user';
@@ -8,16 +8,27 @@ const AlertDialogComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
   const user = useGlobal($user);
+  const toast = useToast();
 
   const onDeleteProfile = async () => {
     const response = await deleteUser(user);
-    logout();
-  };
+    if (response.message == "User deleted") {
+      toast({
+        title: "Profil törlése",
+        description: "A felhasználó adatait töröltük.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+      logout();
+    };
+  }
 
   return (
     <>
       <Button colorScheme='red' onClick={onOpen}>
-      Profil törlése
+        Profil törlése
       </Button>
 
       <AlertDialog

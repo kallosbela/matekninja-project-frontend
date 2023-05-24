@@ -4,24 +4,28 @@ import getStatistics from "../../api/getStatistics";
 
 type Props = {
   setStatistics: (statistics: string) => void;
+  setLoading: (loading: boolean) => void;
 };
 
-const DateInput: FC<Props> = ({setStatistics}) => {
+const DateInput: FC<Props> = ({setStatistics, setLoading}) => {
 
   const maxDate = (new Date()).toISOString().split("T")[0];
-  const [startDate, setStartDate] = useState<string | undefined>("2023-04-25");
+  const aWeekBefore = new Date(new Date().getTime()-7*24*3600*1000).toISOString().split("T")[0];
+  const [startDate, setStartDate] = useState<string | undefined>(aWeekBefore);
   const [endDate, setEndDate] = useState<string | undefined>(maxDate);
 
   const generateStatistics = async () => {
+    setLoading(true);
     const start = (new Date(startDate||"")).getTime();
     const end = ((new Date(endDate||"")).getTime()+24*3600*1000+10);
     const response = await getStatistics(start,end);
     if (!response) {
       setStatistics("No statistics found")
+      setLoading(false);
       return;
     }
-    console.log("response", response);
     setStatistics(response);
+    setLoading(false);
   };
 
   return (

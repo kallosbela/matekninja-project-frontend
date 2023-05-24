@@ -8,7 +8,7 @@ const client = axios.create({
 export const deleteUser = async (user: any): Promise<any> => {
   const token = localStorage.getItem("token");
   try {
-    const response = await client.delete(`/api/user/${user?.id}`, {headers: { Authorization: `Bearer ${token}`}});
+    const response = await client.delete(`/api/user/${user._id}`, {headers: { Authorization: `Bearer ${token}`}});
     return response.data;
   } catch (error) {
     console.log(error);

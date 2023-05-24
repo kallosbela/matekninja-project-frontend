@@ -8,6 +8,7 @@ import { getSolutions } from "../api/getSolutions";
 import { getMyTasks } from "../api/getTasks";
 import { TaskType } from "../zod/task";
 import MathComponent from "./MathComponent";
+import DateInputInResults from "./UI/DateInputInResults";
 
 const Results = () => {
 
@@ -20,7 +21,9 @@ const Results = () => {
   useEffect(() => {
     const init = async () => {
       if (!user) return;
-      const mySolutions = await getSolutions();
+      const start = new Date().getTime()-7*24*3600*1000;
+      const end = ((new Date()).getTime()+24*3600*1000+10);
+      const mySolutions = await getSolutions(start,end);
       if (!mySolutions) return;
       setSolutions(mySolutions);
       const taskIds = mySolutions.map((solution) => solution.taskId);
@@ -45,6 +48,7 @@ const Results = () => {
       <Tooltip label="A zölddel keretezett feladatoknak az utolsó megoldása helyes, a pirosaknak rossz.">
         <Text fontSize={"2xl"} textAlign={"center"} fontFamily={'Shojumaru'}>Eredményeim</Text>
       </Tooltip>
+      <DateInputInResults setSolutions={setSolutions} setTasks={setTasks} setLoading={setLoading} />
       {loading && <Flex justifyContent={"center"}><Spinner color={"green"} size="xl"/></Flex>}
       {tasks.length === 0 && !loading && <Text fontSize={"xl"} textAlign={"center"}>(Nincs még elmentett eredményed...)</Text>}
       <ul>

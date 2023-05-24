@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useGlobal from "../hooks/useGlobal";
 import { $user, decodeUser, logout } from "../states/user";
-import { Button, Heading, Flex, Avatar, Stack, Image, Box, Input, Text, useToast, useDisclosure, AlertDialog, AlertDialogOverlay } from "@chakra-ui/react";
+import { Button, Flex, Avatar, Stack, Input, Text, useToast } from "@chakra-ui/react";
 import { updateUserData } from "../api/updateUserData";
 import { deleteUser } from "../api/deleteUser";
 import AlertDialogComponent from "./UI/AlertDialog"; //can delete user!!!
@@ -55,13 +55,6 @@ const StudentProfile: React.FC = () => {
       isClosable: true,
       position: "top",
     });
-  };
-
-  const onDeleteProfile = async () => {
-    const response = await deleteUser(user);
-    console.log("response: ", response);
-    await logout();
-    console.log("Profil törölve");
   };
 
   return (

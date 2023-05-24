@@ -70,10 +70,10 @@ const Task: FC<Props> = ({ taskListId, task }) => {
   };
 
   return (
-    <Box p="1rem" >
+    <Box margin={{ base: "0 1rem", md: "0 8rem" }} p={"1rem"}>
       {task && (<>
-        <Text fontSize={"xl"}><b>{taskIndex}. feladat</b></Text>
-        <Text fontSize={"xl"} mb={"1rem"}>({task.name})</Text>
+        <Text fontSize={"xl"} textAlign={"center"}><b>{taskIndex}. feladat</b></Text>
+        <Text fontSize={"xl"} mb={"1rem"} textAlign={"center"}>({task.name})</Text>
         <MathComponent text={task.text} />
       </>)
       }
@@ -85,12 +85,14 @@ const Task: FC<Props> = ({ taskListId, task }) => {
             value={solution}
             onChange={handleChange}
             placeholder="Add meg a megoldást"
-            onFocus={(e) => e.target.select()}
+            autoFocus={true}
+            margin={"0.5rem 0"}
           />
-          <Button onClick={handleSubmit}>Eredmény mentése</Button>
-        </form>
-      </Flex>)}
-    </Box>
+          <Button onClick={handleSubmit} >Eredmény mentése</Button>
+      </form>
+      </Flex>)
+}
+    </Box >
   )
 };
 

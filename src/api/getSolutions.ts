@@ -7,14 +7,18 @@ const client = axios.create({
   baseURL: baseUrl,
 });
 
-export const getSolutions = async (): Promise<SolutionType[] | undefined> => {
+export const getSolutions = async (start: number, end: number): Promise<SolutionType[] | undefined> => {
   const token = $token.getValue()
   try {
     const response = await client.get(`/api/solution`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("response.data", response.data);
-    const result = SolutionSchemaArray.safeParse(response.data);
+    const filtered = response.data.filter((solution: SolutionType) => {
+      return solution.date >= start && solution.date <= end;
+    });
+
+    const result = SolutionSchemaArray.safeParse(filtered);
     if (!result.success) {
       console.log(result.error);
       return;

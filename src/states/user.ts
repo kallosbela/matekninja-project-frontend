@@ -19,7 +19,6 @@ export const decodeUser = (token: string | null): UserType | null => {
   if (!token) return null;
   const decodedToken = jwt_decode(token);
   const result = UserSchema.safeParse(decodedToken);
-  console.log("result", result)
   if (!result.success) return null;
   return result.data;
 };

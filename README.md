@@ -1,5 +1,7 @@
 # MatekNinja
 
+The website available here: https://matekninja.hu
+
 ## Description
 
 MatekNinja is a frontend React application intended for students who want to practice solving mathematical problems. The application allows students to create and modify their profiles, including name, school, and team name, with the only exception being their email. Currently, the application only supports the Hungarian language. A Google account is required to sign in and use the application.
